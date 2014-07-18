@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4728f43568c54962abc77b5e320438cc" Name="Diagram1">
+        <EntityTypeShape EntityType="CAH_DatabaseModel.BlackCard" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAH_DatabaseModel.Game" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAH_DatabaseModel.Hand" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAH_DatabaseModel.Player" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAH_DatabaseModel.Round" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="CAH_DatabaseModel.FK_GameRound" ManuallyRouted="false" />
+        <AssociationConnector Association="CAH_DatabaseModel.FK_PlayerHand" ManuallyRouted="false" />
+        <AssociationConnector Association="CAH_DatabaseModel.FK_RoundHand" ManuallyRouted="false" />
+        <AssociationConnector Association="CAH_DatabaseModel.GamePlayer" ManuallyRouted="false" />
+        <AssociationConnector Association="CAH_DatabaseModel.BlackCardRound" />
+        <EntityTypeShape EntityType="CAH_DatabaseModel.RoundWinner" Width="1.5" PointX="9.875" PointY="1.75" />
+        <AssociationConnector Association="CAH_DatabaseModel.PlayerRoundWinner" />
+        <AssociationConnector Association="CAH_DatabaseModel.RoundRoundWinner" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

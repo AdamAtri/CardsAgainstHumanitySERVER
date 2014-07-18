@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CAH_DatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CAH_DatabaseModelStoreContainer">
+    <EntitySet Name="BlackCards" EntityType="CAH_DatabaseModel.Store.BlackCards" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="Games" EntityType="CAH_DatabaseModel.Store.Games" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="Hands" EntityType="CAH_DatabaseModel.Store.Hands" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="Players" EntityType="CAH_DatabaseModel.Store.Players" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="Rounds" EntityType="CAH_DatabaseModel.Store.Rounds" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="RoundWinners" EntityType="CAH_DatabaseModel.Store.RoundWinners" store:Type="Tables" Schema="cah" />
+    <EntitySet Name="GamePlayer" EntityType="CAH_DatabaseModel.Store.GamePlayer" store:Type="Tables" Schema="cah" />
+    <AssociationSet Name="FK_GameRound" Association="CAH_DatabaseModel.Store.FK_GameRound">
+      <End Role="Games" EntitySet="Games" />
+      <End Role="Rounds" EntitySet="Rounds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlayerHand" Association="CAH_DatabaseModel.Store.FK_PlayerHand">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="Hands" EntitySet="Hands" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoundHand" Association="CAH_DatabaseModel.Store.FK_RoundHand">
+      <End Role="Rounds" EntitySet="Rounds" />
+      <End Role="Hands" EntitySet="Hands" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GamePlayer_Games" Association="CAH_DatabaseModel.Store.FK_GamePlayer_Games">
+      <End Role="Games" EntitySet="Games" />
+      <End Role="GamePlayer" EntitySet="GamePlayer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GamePlayer_Players" Association="CAH_DatabaseModel.Store.FK_GamePlayer_Players">
+      <End Role="Players" EntitySet="Players" />
+      <End Role="GamePlayer" EntitySet="GamePlayer" />
+    </AssociationSet>
+    <AssociationSet Name="BlackCardRound" Association="CAH_DatabaseModel.Store.BlackCardRound">
+      <End Role="BlackCard" EntitySet="BlackCards" />
+      <End Role="Round" EntitySet="Rounds" />
+    </AssociationSet>
+    <AssociationSet Name="PlayerRoundWinner" Association="CAH_DatabaseModel.Store.PlayerRoundWinner">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="RoundWinner" EntitySet="RoundWinners" />
+    </AssociationSet>
+    <AssociationSet Name="RoundRoundWinner" Association="CAH_DatabaseModel.Store.RoundRoundWinner">
+      <End Role="Round" EntitySet="Rounds" />
+      <End Role="RoundWinner" EntitySet="RoundWinners" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BlackCards">
+    <Key>
+      <PropertyRef Name="BCID" />
+    </Key>
+    <Property Name="BCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sentence" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PickCount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="GameID" />
+    </Key>
+    <Property Name="GameID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GameStatus" Type="int" Nullable="false" />
+    <Property Name="NumPlayers" Type="int" Nullable="true" />
+    <Property Name="StartTime" Type="datetime" Nullable="true" />
+    <Property Name="FinishTime" Type="datetime" Nullable="true" />
+    <Property Name="Winner" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Hands">
+    <Key>
+      <PropertyRef Name="HandID" />
+    </Key>
+    <Property Name="HandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoundID" Type="int" Nullable="false" />
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="Card01" Type="int" Nullable="false" />
+    <Property Name="Card02" Type="int" Nullable="false" />
+    <Property Name="Card03" Type="int" Nullable="false" />
+    <Property Name="Card04" Type="int" Nullable="false" />
+    <Property Name="Card05" Type="int" Nullable="false" />
+    <Property Name="Card06" Type="int" Nullable="false" />
+    <Property Name="Card07" Type="int" Nullable="false" />
+    <Property Name="Card08" Type="int" Nullable="false" />
+    <Property Name="Card09" Type="int" Nullable="false" />
+    <Property Name="Card10" Type="int" Nullable="false" />
+    <Property Name="Selection" Type="nvarchar" Nullable="true" MaxLength="11" />
+    <Property Name="Vote" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+    </Key>
+    <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="FName" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="LName" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="BirthDate" Type="datetime" Nullable="true" />
+    <Property Name="Mobile" Type="nvarchar" Nullable="true" MaxLength="20" />
+    <Property Name="Avatar" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Rounds">
+    <Key>
+      <PropertyRef Name="RoundID" />
+    </Key>
+    <Property Name="RoundID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoundNum" Type="int" Nullable="false" />
+    <Property Name="GameID" Type="int" Nullable="false" />
+    <Property Name="BlackCardID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoundWinners">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+      <PropertyRef Name="RoundID" />
+    </Key>
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="RoundID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GamePlayer">
+    <Key>
+      <PropertyRef Name="Games_GameID" />
+      <PropertyRef Name="Players_PlayerID" />
+    </Key>
+    <Property Name="Games_GameID" Type="int" Nullable="false" />
+    <Property Name="Players_PlayerID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GameRound">
+    <End Role="Games" Type="CAH_DatabaseModel.Store.Games" Multiplicity="1" />
+    <End Role="Rounds" Type="CAH_DatabaseModel.Store.Rounds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Games">
+        <PropertyRef Name="GameID" />
+      </Principal>
+      <Dependent Role="Rounds">
+        <PropertyRef Name="GameID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlayerHand">
+    <End Role="Players" Type="CAH_DatabaseModel.Store.Players" Multiplicity="1" />
+    <End Role="Hands" Type="CAH_DatabaseModel.Store.Hands" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="Hands">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoundHand">
+    <End Role="Rounds" Type="CAH_DatabaseModel.Store.Rounds" Multiplicity="1" />
+    <End Role="Hands" Type="CAH_DatabaseModel.Store.Hands" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rounds">
+        <PropertyRef Name="RoundID" />
+      </Principal>
+      <Dependent Role="Hands">
+        <PropertyRef Name="RoundID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BlackCardRound">
+    <End Role="BlackCard" Type="CAH_DatabaseModel.Store.BlackCards" Multiplicity="1" />
+    <End Role="Round" Type="CAH_DatabaseModel.Store.Rounds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BlackCard">
+        <PropertyRef Name="BCID" />
+      </Principal>
+      <Dependent Role="Round">
+        <PropertyRef Name="BlackCardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayerRoundWinner">
+    <End Role="Player" Type="CAH_DatabaseModel.Store.Players" Multiplicity="1" />
+    <End Role="RoundWinner" Type="CAH_DatabaseModel.Store.RoundWinners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="RoundWinner">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RoundRoundWinner">
+    <End Role="Round" Type="CAH_DatabaseModel.Store.Rounds" Multiplicity="1" />
+    <End Role="RoundWinner" Type="CAH_DatabaseModel.Store.RoundWinners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Round">
+        <PropertyRef Name="RoundID" />
+      </Principal>
+      <Dependent Role="RoundWinner">
+        <PropertyRef Name="RoundID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GamePlayer_Games">
+    <End Role="Games" Type="CAH_DatabaseModel.Store.Games" Multiplicity="1" />
+    <End Role="GamePlayer" Type="CAH_DatabaseModel.Store.GamePlayer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Games">
+        <PropertyRef Name="GameID" />
+      </Principal>
+      <Dependent Role="GamePlayer">
+        <PropertyRef Name="Games_GameID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GamePlayer_Players">
+    <End Role="GamePlayer" Type="CAH_DatabaseModel.Store.GamePlayer" Multiplicity="*" />
+    <End Role="Players" Type="CAH_DatabaseModel.Store.Players" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Players">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="GamePlayer">
+        <PropertyRef Name="Players_PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CAH_DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BlackCard">
+          <Key>
+            <PropertyRef Name="BCID" />
+          </Key>
+          <Property Name="BCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sentence" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PickCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameStatus" Type="Int32" Nullable="false" />
+          <Property Name="NumPlayers" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="FinishTime" Type="DateTime" Precision="3" />
+          <Property Name="Winner" Type="Int32" />
+          <NavigationProperty Name="Rounds" Relationship="Self.FK_GameRound" FromRole="Games" ToRole="Rounds" />
+          <NavigationProperty Name="Players" Relationship="Self.GamePlayer" FromRole="Games" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Hand">
+          <Key>
+            <PropertyRef Name="HandID" />
+          </Key>
+          <Property Name="HandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoundID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Card01" Type="Int32" Nullable="false" />
+          <Property Name="Card02" Type="Int32" Nullable="false" />
+          <Property Name="Card03" Type="Int32" Nullable="false" />
+          <Property Name="Card04" Type="Int32" Nullable="false" />
+          <Property Name="Card05" Type="Int32" Nullable="false" />
+          <Property Name="Card06" Type="Int32" Nullable="false" />
+          <Property Name="Card07" Type="Int32" Nullable="false" />
+          <Property Name="Card08" Type="Int32" Nullable="false" />
+          <Property Name="Card09" Type="Int32" Nullable="false" />
+          <Property Name="Card10" Type="Int32" Nullable="false" />
+          <Property Name="Selection" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Vote" Type="Int32" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_PlayerHand" FromRole="Hands" ToRole="Players" />
+          <NavigationProperty Name="Round" Relationship="Self.FK_RoundHand" FromRole="Hands" ToRole="Rounds" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Hands" Relationship="Self.FK_PlayerHand" FromRole="Players" ToRole="Hands" />
+          <NavigationProperty Name="Games" Relationship="Self.GamePlayer" FromRole="Players" ToRole="Games" />
+        </EntityType>
+        <EntityType Name="Round">
+          <Key>
+            <PropertyRef Name="RoundID" />
+          </Key>
+          <Property Name="RoundID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoundNum" Type="Int32" Nullable="false" />
+          <Property Name="GameID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_GameRound" FromRole="Rounds" ToRole="Games" />
+          <NavigationProperty Name="Hands" Relationship="Self.FK_RoundHand" FromRole="Rounds" ToRole="Hands" />
+          <NavigationProperty Name="BlackCard" Relationship="CAH_DatabaseModel.BlackCardRound" FromRole="Round" ToRole="BlackCard" />
+          <Property Name="BlackCardID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_GameRound">
+          <End Role="Games" Type="Self.Game" Multiplicity="1" />
+          <End Role="Rounds" Type="Self.Round" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Rounds">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerHand">
+          <End Role="Players" Type="Self.Player" Multiplicity="1" />
+          <End Role="Hands" Type="Self.Hand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="Hands">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoundHand">
+          <End Role="Rounds" Type="Self.Round" Multiplicity="1" />
+          <End Role="Hands" Type="Self.Hand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rounds">
+              <PropertyRef Name="RoundID" />
+            </Principal>
+            <Dependent Role="Hands">
+              <PropertyRef Name="RoundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GamePlayer">
+          <End Role="Games" Type="Self.Game" Multiplicity="*" />
+          <End Role="Players" Type="Self.Player" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CAH_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BlackCards" EntityType="Self.BlackCard" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="Hands" EntityType="Self.Hand" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="Rounds" EntityType="Self.Round" />
+          <AssociationSet Name="FK_GameRound" Association="Self.FK_GameRound">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="Rounds" EntitySet="Rounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerHand" Association="Self.FK_PlayerHand">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Hands" EntitySet="Hands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoundHand" Association="Self.FK_RoundHand">
+            <End Role="Rounds" EntitySet="Rounds" />
+            <End Role="Hands" EntitySet="Hands" />
+          </AssociationSet>
+          <AssociationSet Name="GamePlayer" Association="Self.GamePlayer">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="BlackCardRound" Association="CAH_DatabaseModel.BlackCardRound">
+            <End Role="BlackCard" EntitySet="BlackCards" />
+            <End Role="Round" EntitySet="Rounds" />
+          </AssociationSet>
+          <EntitySet Name="RoundWinners" EntityType="CAH_DatabaseModel.RoundWinner" />
+          <AssociationSet Name="PlayerRoundWinner" Association="CAH_DatabaseModel.PlayerRoundWinner">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="RoundWinner" EntitySet="RoundWinners" />
+          </AssociationSet>
+          <AssociationSet Name="RoundRoundWinner" Association="CAH_DatabaseModel.RoundRoundWinner">
+            <End Role="Round" EntitySet="Rounds" />
+            <End Role="RoundWinner" EntitySet="RoundWinners" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="BlackCardRound">
+          <End Type="CAH_DatabaseModel.BlackCard" Role="BlackCard" Multiplicity="1" />
+          <End Type="CAH_DatabaseModel.Round" Role="Round" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlackCard">
+              <PropertyRef Name="BCID" />
+            </Principal>
+            <Dependent Role="Round">
+              <PropertyRef Name="BlackCardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RoundWinner" >
+          <Key>
+            <PropertyRef Name="PlayerID" />
+            <PropertyRef Name="RoundID" />
+          </Key>
+          <NavigationProperty Name="Player" Relationship="CAH_DatabaseModel.PlayerRoundWinner" FromRole="RoundWinner" ToRole="Player" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Round" Relationship="CAH_DatabaseModel.RoundRoundWinner" FromRole="RoundWinner" ToRole="Round" />
+          <Property Name="RoundID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="PlayerRoundWinner">
+          <End Type="CAH_DatabaseModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="CAH_DatabaseModel.RoundWinner" Role="RoundWinner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="RoundWinner">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RoundRoundWinner">
+          <End Type="CAH_DatabaseModel.Round" Role="Round" Multiplicity="1" />
+          <End Type="CAH_DatabaseModel.RoundWinner" Role="RoundWinner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="RoundID" />
+            </Principal>
+            <Dependent Role="RoundWinner">
+              <PropertyRef Name="RoundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CAH_DatabaseModelStoreContainer" CdmEntityContainer="CAH_Entities">
+    <EntitySetMapping Name="BlackCards">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.BlackCard)">
+        <MappingFragment StoreEntitySet="BlackCards">
+          <ScalarProperty Name="BCID" ColumnName="BCID" />
+          <ScalarProperty Name="Sentence" ColumnName="Sentence" />
+          <ScalarProperty Name="PickCount" ColumnName="PickCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.Game)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="GameID" ColumnName="GameID" />
+          <ScalarProperty Name="GameStatus" ColumnName="GameStatus" />
+          <ScalarProperty Name="NumPlayers" ColumnName="NumPlayers" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="FinishTime" ColumnName="FinishTime" />
+          <ScalarProperty Name="Winner" ColumnName="Winner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hands">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.Hand)">
+        <MappingFragment StoreEntitySet="Hands">
+          <ScalarProperty Name="HandID" ColumnName="HandID" />
+          <ScalarProperty Name="RoundID" ColumnName="RoundID" />
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="Card01" ColumnName="Card01" />
+          <ScalarProperty Name="Card02" ColumnName="Card02" />
+          <ScalarProperty Name="Card03" ColumnName="Card03" />
+          <ScalarProperty Name="Card04" ColumnName="Card04" />
+          <ScalarProperty Name="Card05" ColumnName="Card05" />
+          <ScalarProperty Name="Card06" ColumnName="Card06" />
+          <ScalarProperty Name="Card07" ColumnName="Card07" />
+          <ScalarProperty Name="Card08" ColumnName="Card08" />
+          <ScalarProperty Name="Card09" ColumnName="Card09" />
+          <ScalarProperty Name="Card10" ColumnName="Card10" />
+          <ScalarProperty Name="Selection" ColumnName="Selection" />
+          <ScalarProperty Name="Vote" ColumnName="Vote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.Player)">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rounds">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.Round)">
+        <MappingFragment StoreEntitySet="Rounds">
+          <ScalarProperty Name="RoundID" ColumnName="RoundID" />
+          <ScalarProperty Name="RoundNum" ColumnName="RoundNum" />
+          <ScalarProperty Name="GameID" ColumnName="GameID" />
+          <ScalarProperty Name="BlackCardID" ColumnName="BlackCardID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoundWinners">
+      <EntityTypeMapping TypeName="IsTypeOf(CAH_DatabaseModel.RoundWinner)">
+        <MappingFragment StoreEntitySet="RoundWinners">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="RoundID" ColumnName="RoundID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GamePlayer" TypeName="CAH_DatabaseModel.GamePlayer" StoreEntitySet="GamePlayer">
+      <EndProperty Name="Games">
+        <ScalarProperty Name="GameID" ColumnName="Games_GameID" />
+      </EndProperty>
+      <EndProperty Name="Players">
+        <ScalarProperty Name="PlayerID" ColumnName="Players_PlayerID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="cah" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
