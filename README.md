@@ -1,23 +1,21 @@
 CardsAgainstHumanitySERVER
 ==========================
-This is the SERVER application for a software implementation of the game CARDS AGAINST HUMANITY.<br/>
-The server manages the game play for all players, allowing multiple concurrent games, while tracking the action from every round of play.<br/>
+This is the SERVER application for a software implementation of the game CARDS AGAINST HUMANITY.
 
-Technology used:<br/>
-**All code proudly written in VB.NET (VS2013 IDE)**
+**Technology used:**
+All code proudly written in VB.NET (VS2013 IDE)
   <ul>
   	<li>WCF Restful Services</li>
   	<li>Entity Framework</li>
   	<li>LINQ</li>
   </ul>
   
-<p>
-  PreRequisits to running: <br/>
+<p>**PreRequisits to running:** <br/>
   MSSQL Server 2008 or newer (see Database Configuration below)
 </p>
   
 
-<p>Database Configuration:
+<p>**Database Configuration:**
 <ol>
   <li>Create a new database named "CAH_Database"</li>
   <li>Create a new login with username: CAH_Model pw: password (Security >> Logins)</li>
@@ -28,4 +26,6 @@ Technology used:<br/>
 </ol>
 </p>
   
+  
+
   
