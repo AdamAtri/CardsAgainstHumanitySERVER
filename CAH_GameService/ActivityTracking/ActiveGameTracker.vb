@@ -5,7 +5,7 @@ Module ActiveGameTracker
     Public Initialized As Boolean = False
     Public rand As New Random()
     Public Const MAX_PLAYERS As Int32 = 2
-    Public Const MAX_ROUNDS As Int32 = GameStatus.ROUND5
+    Public Const MAX_ROUNDS As Int32 = 5
 
     Public Sub Intialize()
         With ActiveGameTable
@@ -77,7 +77,7 @@ Module ActiveGameTracker
         row("PlayersAccountedFor") = 0
         ActiveGameTable.AcceptChanges()
 
-        If CInt(row("CurrentRound")) > MAX_ROUNDS Then
+        If CInt(row("CurrentRound")) > GameStatus.ROUND5 Then
             stillPlaying = False
         End If
         Return stillPlaying
