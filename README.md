@@ -2,15 +2,15 @@ CardsAgainstHumanitySERVER
 ==========================
 This is the SERVER application for a software implementation of the game CARDS AGAINST HUMANITY.
 
-**Technology used:**
-All code proudly written in VB.NET (VS2013 IDE)
+<em>Technology used:</em><br/>
+**All code proudly written in VB.NET (VS2013 IDE)
   <ul>
   	<li>WCF Restful Services</li>
   	<li>Entity Framework</li>
   	<li>LINQ</li>
   </ul>
   
-<p>**PreRequisits to running:** <br/>
+<p><strong>PreRequisits to running:**</strong> <br/>
   MSSQL Server 2008 or newer (see Database Configuration below)
 </p>
   
