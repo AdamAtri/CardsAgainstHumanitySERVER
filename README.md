@@ -1,6 +1,8 @@
 CardsAgainstHumanitySERVER
 ==========================
-This is the SERVER application for a software implementation of the game CARDS AGAINST HUMANITY.
+This is the SERVER application for a software implementation of the game CARDS AGAINST HUMANITY.<br/>
+The server manages game play, allowing multiple concurrent games, while tracking the action from every round of play.</br>
+
 
 <strong>Technology used:</strong><br/>
 **All code proudly written in VB.NET (VS2013 IDE)
@@ -23,6 +25,8 @@ This is the SERVER application for a software implementation of the game CARDS A
   <li>Create a new schema within CAH_Database named "cah" with owner "CAH_Model". <br/>
   	  (Databases >> CAH_Database >> Security >> Schemas)</li>
   <li>Restart MSSQL Server</li>
+  <li>Open CAH_DataLibrary directory and execute the sql script: CAH_DataModel.edmx.sql <br/>
+      (if you run into an error remove the stuff about dropping FK Constraints and existing tables)</li>
 </ol>
 </p>
   
