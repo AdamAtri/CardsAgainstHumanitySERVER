@@ -109,8 +109,7 @@ Module CAH_Repository
     End Function
 
     Function GamePlayerCount(theGameID As Integer) As Integer
-        Dim GamePlayers As ICollection(Of Player) = Repository.Games.Find(theGameID).Players
-        Return GamePlayers.Count
+        Return Repository.Games.Find(theGameID).Players.ToList.Count
     End Function
 
     Function PlayersOpenGames(aPlayerID As Integer) As Boolean
@@ -139,6 +138,16 @@ Module CAH_Repository
         ActiveGameTracker.StartGame(theGameID, CInt(theGame.NumPlayers))
         Repository.SaveChanges()
     End Sub
+
+    Function GetGamePlayerToken(aPlayerID As Integer) As String
+        Dim thegames = _
+            From g In Repository.Players.Find(aPlayerID).Games.AsEnumerable()
+            Order By g.GameID Descending _
+            Select g
+
+        Dim gameID As String = thegames.ToList()(0).GameID.ToString
+        Return String.Format("{0}_{1}", gameID, aPlayerID)
+    End Function
 #End Region
 
 #Region "   ***DEALER FUNCTIONS***   "
@@ -190,6 +199,10 @@ Module CAH_Repository
 
     Function GetRoundByHandID(HandID As Integer) As Integer
         Return Repository.Hands.Find(HandID).RoundID
+    End Function
+
+    Function GetPickCount(HandID As Integer) As Integer
+        Return Repository.Hands.Find(HandID).Round.BlackCard.PickCount
     End Function
 #End Region
 
@@ -281,6 +294,10 @@ Module CAH_Repository
     Function GetPlayerIDByUsername(Username As String) As Integer?
         Return Repository.Players.Where(Function(p) p.Username = Username).Single.PlayerID
     End Function
+
+
+
+
 
 
 

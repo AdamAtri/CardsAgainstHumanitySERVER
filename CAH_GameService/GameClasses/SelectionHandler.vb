@@ -7,12 +7,20 @@
                                                 .ErrorInfo = "ROUND NOT OVER", _
                                                 .ErrorDetail = "You cannot submit cards for a new round until that round has begun."})
         Else
+            Dim pickCount As Int32 = CAH_Repository.GetPickCount(thePlayerHand.HandID)
+            If pickCount < 3 Then
+                If Not thePlayerHand.Selection(pickCount) = String.Empty Then
+                    Throw New TooManySelectionsException(New CustomErrorDetail With { _
+                                                         .ErrorInfo = "TOO MANY SELECTIONS", _
+                                                         .ErrorDetail = "There are too many selections in your hand."})
+                End If
+            End If
             Dim result As PlayerHand = CAH_Repository.RecordSelection(thePlayerHand)
             If ActiveGameTracker.PlayerAccountedFor(game) Then
                 ActiveGameTracker.SelectionsHaveBeenMade(game)
             End If
             Return result
-        End If
+            End If
     End Function
 
     Function GetAllSelections(theRoundID As Int32) As PlayerSelection()

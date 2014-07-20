@@ -37,6 +37,8 @@ Public Class CAH_Service
         Try
             Dim D As New Dealer
             Return D.DealHand(CInt(GamePlayer(0)), CInt(GamePlayer(1)))
+        Catch ex As HandsNotReadyException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Dealer:DealHands", CInt(GamePlayer(0)), CInt(GamePlayer(1)))
             Throw

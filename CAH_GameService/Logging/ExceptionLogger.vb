@@ -23,56 +23,55 @@ Public Module ExceptionLogger
     Public Function WriteException(ByVal Excpt As Exception, ByVal gameModule As String, _
                                    Optional ByVal gameID As Int32 = -9999, _
                                    Optional ByVal playerID As Int32 = -9999) As Boolean
-        Dim t As New Task(Of Boolean)(Function()
-                                          Dim writer As StreamWriter = Nothing
 
-                                          Try
-                                              If Not File.Exists(LOG_FILE) Then
-                                                  File.Create(LOG_FILE)
-                                                  writer = File.AppendText(LOG_FILE)
-                                                  With writer
-                                                      .AutoFlush = True
-                                                      .WriteLine("EXCEPTION LOG FILE")
-                                                  End With
+        Dim writer As StreamWriter = Nothing
 
-                                              End If
+        Try
+            If Not File.Exists(LOG_FILE) Then
+                File.Create(LOG_FILE)
+                writer = File.AppendText(LOG_FILE)
+                With writer
+                    .AutoFlush = True
+                    .WriteLine("EXCEPTION LOG FILE")
+                End With
 
-                                              Dim count As Int32 = 0
-                                              While IsFileOpen()
-                                                  Threading.Thread.Sleep(1000)
-                                                  count += 1
-                                                  If count = MAX_TRIES Then
-                                                      Throw New Exception("EXCEPTION LOGGER: Cannot write to exception log file.")
-                                                  End If
-                                              End While
+            End If
 
-                                              writer = File.AppendText(LOG_FILE)
-                                              With writer
-                                                  .AutoFlush = True
-                                                  .WriteLine("____________________________________")
-                                                  .WriteLine("DATE: " & DateTime.Now.ToString)
-                                                  .WriteLine("GAME MODULE: " & gameModule)
-                                                  .WriteLine("EXCEPTION: " & Excpt.Message)
-                                                  .WriteLine("SOURCE: " & Excpt.Source)
-                                                  .WriteLine("STACK TRACE: " & Excpt.StackTrace)
-                                                  .WriteLine(vbCrLf)
-                                                  If gameID > -9999 Then
-                                                      .WriteLine("GAME_ID: " & gameID)
-                                                  End If
-                                                  If playerID > -9999 Then
-                                                      .WriteLine("PLAYER_ID: " & playerID)
-                                                  End If
-                                              End With
-                                          Catch ex As Exception
-                                              Console.WriteLine(ex)
-                                          Finally
-                                              If writer IsNot Nothing Then
-                                                  writer.Close()
-                                              End If
-                                          End Try
-                                          Return True
-                                      End Function)
-        Return t.Result
+            Dim count As Int32 = 0
+            While IsFileOpen()
+                Threading.Thread.Sleep(1000)
+                count += 1
+                If count = MAX_TRIES Then
+                    Throw New Exception("EXCEPTION LOGGER: Cannot write to exception log file.")
+                End If
+            End While
+
+            writer = File.AppendText(LOG_FILE)
+            With writer
+                .AutoFlush = True
+                .WriteLine("____________________________________")
+                .WriteLine("DATE: " & DateTime.Now.ToString)
+                .WriteLine("GAME MODULE: " & gameModule)
+                .WriteLine("EXCEPTION: " & Excpt.Message)
+                .WriteLine("SOURCE: " & Excpt.Source)
+                .WriteLine("STACK TRACE: " & Excpt.StackTrace)
+                .WriteLine(vbCrLf)
+                If gameID > -9999 Then
+                    .WriteLine("GAME_ID: " & gameID)
+                End If
+                If playerID > -9999 Then
+                    .WriteLine("PLAYER_ID: " & playerID)
+                End If
+            End With
+        Catch ex As Exception
+            Console.WriteLine(ex)
+        Finally
+            If writer IsNot Nothing Then
+                writer.Close()
+            End If
+        End Try
+        Return True
+
     End Function
 
     Private Function IsFileOpen() As Boolean

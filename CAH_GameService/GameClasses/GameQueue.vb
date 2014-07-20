@@ -40,9 +40,7 @@
 
             Return GamePlayerID
         Else
-            Throw New ActivePlayerException(New CustomErrorDetail With { _
-                                            .ErrorInfo = "ALREADY PLAYING", _
-                                            .ErrorDetail = "You are already playing, you silly goose."})
+            Return CAH_Repository.GetGamePlayerToken(aPlayerID)
         End If
     End Function
 

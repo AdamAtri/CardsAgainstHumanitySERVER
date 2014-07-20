@@ -5,7 +5,7 @@ Module ActiveGameTracker
     Public Initialized As Boolean = False
     Public rand As New Random()
     Public Const MAX_PLAYERS As Int32 = 2
-    Public Const MAX_ROUNDS As Int32 = 5
+    Public Const MAX_ROUNDS As Int32 = GameStatus.ROUND5
 
     Public Sub Intialize()
         With ActiveGameTable
@@ -29,7 +29,7 @@ Module ActiveGameTracker
         Dim row As DataRow = ActiveGameTable.NewRow
         row("GameID") = theGameID
         row("NumPlayers") = 0
-        row("CurrentRound") = 0
+        row("CurrentRound") = GameStatus.ENROLLING
         row("HandsReady") = False
         row("AllSelectionsMade") = False
         row("AllVotesCast") = False
@@ -40,12 +40,7 @@ Module ActiveGameTracker
     Public Function GetGameStatus(ByVal gameID As Int32) As GameStatus
         Dim row As DataRow = ActiveGameTable.Rows.Find(gameID)
         If row IsNot Nothing Then
-            Dim round As Int32 = CInt(row("CurrentRound"))
-            If round = 0 Then
-                Return GameStatus.ENROLLING
-            Else
-                Return GameStatus.STARTED
-            End If
+            Return CType(row("CurrentRound"), GameStatus)
         Else
             Return GameStatus.FINISHED
         End If
@@ -53,7 +48,7 @@ Module ActiveGameTracker
     Public Sub StartGame(ByVal game As Int32, ByVal numPlayers As Int32)
         Dim row As DataRow = ActiveGameTable.Rows.Find(game)
         row("NumPlayers") = numPlayers
-       
+        row("CurrentRound") = GameStatus.ROUND1
         ActiveGameTable.AcceptChanges()
     End Sub
 
