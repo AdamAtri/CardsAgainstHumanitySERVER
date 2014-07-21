@@ -59,7 +59,13 @@ Module ActiveGameTracker
     End Sub
 
     Function AllHandsReady(ByVal game As Int32) As Boolean
-        Return CBool(ActiveGameTable.Rows.Find(game)("HandsReady"))
+        Dim result As Boolean
+        Try
+            result = CBool(ActiveGameTable.Rows.Find(game)("HandsReady"))
+        Catch
+            result = False
+        End Try
+        Return result
     End Function
 
     Public Sub FinishGame(ByVal game As Int32)

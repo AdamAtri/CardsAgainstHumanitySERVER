@@ -16,6 +16,8 @@ Public Class CAH_Service
         Try
             Dim PM As New PlayerManager
             Return PM.Login(user, pass)
+        Catch ila As InvalidLoginAttemptException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "PlayerManager:Login" & vbCrLf & "USERNAME: " & user)
             Throw
