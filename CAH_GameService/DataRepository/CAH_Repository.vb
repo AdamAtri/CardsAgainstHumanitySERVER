@@ -5,7 +5,8 @@ Imports CAH_EntitiesLibrary
 Module CAH_Repository
 
     Private Repository As New CAH_Entities
-    Private BLACKCARDS_XML As String = "C:\BlackCardsList.xml"
+    Private ReadOnly EXE_LOC As String = My.Application.Info.DirectoryPath
+    Private ReadOnly BLACKCARDS_XML As String = EXE_LOC & "\AdditionalFiles\BlackCardsList.xml"
 
 #Region "   ***INITIALIZATION***   "
     ''' <summary>
@@ -32,7 +33,10 @@ Module CAH_Repository
                 MsgBox(ex.ToString)
             End Try
         End If
-        'Console.WriteLine("Found details for BlackCardTable.")
+        'If System.IO.File.Exists(BLACKCARDS_XML) Then
+        '    Console.WriteLine("Found details for BlackCardTable.")
+        'End If
+
     End Sub
 #End Region
 
