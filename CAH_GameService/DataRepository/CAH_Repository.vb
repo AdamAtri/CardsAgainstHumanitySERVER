@@ -13,7 +13,9 @@ Module CAH_Repository
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub CheckBlackCards()
+        'Console.WriteLine("Checking Repository for BlackCardTable.")
         If Repository.BlackCards.ToList.Count <= 0 Then
+
             Dim xml = XDocument.Load(BLACKCARDS_XML)
             For Each e As XElement In xml.Descendants("BlackCard")
                 Dim card As New BlackCard With {.BCID = CInt(e.<BCID>.Value), _
@@ -30,10 +32,25 @@ Module CAH_Repository
                 MsgBox(ex.ToString)
             End Try
         End If
+        'Console.WriteLine("Found details for BlackCardTable.")
     End Sub
 #End Region
 
 #Region "   ***PLAYER MANAGER FUNCTIONS***   "
+
+    Function PlayerAlreadyExists(aNewPlayer As NewPlayer) As Boolean
+        Try
+            Dim thePlayer As Player = Repository.Players.Where(Function(p) p.Username = aNewPlayer.Username).First
+            If thePlayer IsNot Nothing Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
     Public Function CreatePlayer(ByRef aNewPlayer As NewPlayer) As NewPlayer
         Dim PC As New PlayerConverter
         Dim P As Player = PC.Convert(aNewPlayer)
@@ -44,14 +61,14 @@ Module CAH_Repository
     End Function
 
     Function Login(uName As String, encPW As String) As NewPlayer
-            Dim thePlayer As Player = Repository.Players.Where(Function(p) p.Username = uName And p.Password = encPW).First
-            If thePlayer Is Nothing Then
-                Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
-                                                        .ErrorInfo = "LOGIN FAILED", _
-                                                        .ErrorDetail = "That username and password did work, silly. <blank> a different set."})
-            End If
-            Dim PC As New PlayerConverter
-            Return PC.ConvertBack(thePlayer)
+        Dim thePlayer As Player = Repository.Players.Where(Function(p) p.Username = uName And p.Password = encPW).First
+        If thePlayer Is Nothing Then
+            Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
+                                                    .ErrorInfo = "LOGIN FAILED", _
+                                                    .ErrorDetail = "That username and password did work, silly. <blank> a different set."})
+        End If
+        Dim PC As New PlayerConverter
+        Return PC.ConvertBack(thePlayer)
     End Function
 
     Public Function GetProxyPlayerByID(ByVal playerID As Int32) As NewPlayer
@@ -204,6 +221,15 @@ Module CAH_Repository
     Function GetPickCount(HandID As Integer) As Integer
         Return Repository.Hands.Find(HandID).Round.BlackCard.PickCount
     End Function
+
+    Function AlreadySubmittedHand(thePlayerHand As PlayerHand) As Boolean
+        Dim theHand As Hand = Repository.Hands.Find(thePlayerHand.HandID)
+        If theHand.Selection IsNot Nothing Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 #End Region
 
 #Region "   ***VOTE HANDLER FUNCTIONS***   "
@@ -275,6 +301,15 @@ Module CAH_Repository
         End With
         Repository.SaveChanges()
     End Sub
+
+    Function AlreadyCastVote(thePlayerHand As PlayerHand) As Boolean
+        Dim theHand As Hand = Repository.Hands.Find(thePlayerHand.HandID)
+        If theHand.Vote IsNot Nothing Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 #End Region
 
 #Region "   ***ROUND INFO HANDLER FUNCTIONS***   "
@@ -294,6 +329,12 @@ Module CAH_Repository
     Function GetPlayerIDByUsername(Username As String) As Integer?
         Return Repository.Players.Where(Function(p) p.Username = Username).Single.PlayerID
     End Function
+
+
+
+
+
+  
 
 
 

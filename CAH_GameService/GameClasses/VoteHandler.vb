@@ -1,9 +1,20 @@
 ﻿Public Class VoteHandler
 
     Public Function CastVote(thePlayerHand As PlayerHand) As PlayerHand
+        If CAH_Repository.AlreadyCastVote(thePlayerHand) Then
+            Throw New AlreadyCastVoteException(New CustomErrorDetail With { _
+                                               .ErrorInfo = "VOTE ALREADY CAST", _
+                                               .ErrorDetail = "Hand " & thePlayerHand.HandID & " already has a vote associated."})
+        End If
+        Dim game As Int32 = CAH_Repository.GetGameByHandID(thePlayerHand.HandID)
+        If ActiveGameTracker.AllVotesCast(game) Then
+            Throw New SubmitTooQuicklyException(New CustomErrorDetail With { _
+                                                .ErrorInfo = "VOTE TOO EARLY", _
+                                                .ErrorDetail = "You voted to early or very late."})
+        End If
         Dim result As PlayerHand = CAH_Repository.CastVote(thePlayerHand)
         Dim round As Int32 = CAH_Repository.GetRoundByHandID(thePlayerHand.HandID)
-        Dim game As Int32 = CAH_Repository.GetGameByHandID(thePlayerHand.HandID)
+
         If ActiveGameTracker.PlayerAccountedFor(game) Then
             TallyVotes(round)
         End If

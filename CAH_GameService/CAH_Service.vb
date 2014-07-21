@@ -26,6 +26,8 @@ Public Class CAH_Service
         Try
             Dim PM As New PlayerManager
             Return PM.CreateNewPlayer(aNewPlayer)
+        Catch pae As PlayerAlreadyExistsException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "PlayerManager:CreateNew")
             Throw
@@ -37,7 +39,7 @@ Public Class CAH_Service
         Try
             Dim D As New Dealer
             Return D.DealHand(CInt(GamePlayer(0)), CInt(GamePlayer(1)))
-        Catch ex As HandsNotReadyException
+        Catch cge As CustomGameException
             Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Dealer:DealHands", CInt(GamePlayer(0)), CInt(GamePlayer(1)))
@@ -50,6 +52,8 @@ Public Class CAH_Service
             Dim GQ As New GameQueue
             Dim GamePlayerID As String = GQ.QueuePlayer(CInt(playerID))
             Return GamePlayerID
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Game_Queue.JoinGame", playerID:=CInt(playerID))
             Throw
@@ -62,6 +66,8 @@ Public Class CAH_Service
         Try
             Dim RH As New RoundInfoHandler
             Return RH.GetRoundInfo(CInt(GamePlayer(0)))
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Round_Info_Handler.GetRoundInfo", CInt(GamePlayer(0)), CInt(GamePlayer(1)))
             Throw
@@ -72,6 +78,8 @@ Public Class CAH_Service
         Try
             Dim SH As New SelectionHandler
             Return SH.SubmitSelection(aPlayerHand)
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Selection_Handler.Submit(HAND_ID: " & aPlayerHand.HandID & ")")
             Throw
@@ -82,6 +90,8 @@ Public Class CAH_Service
         Try
             Dim SH As New SelectionHandler
             Return SH.GetAllSelections(CInt(RoundID))
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Selection_Handler:GetAllSelections(ROUND_ID: " & RoundID & ")")
             Throw

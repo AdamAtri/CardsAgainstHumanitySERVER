@@ -16,6 +16,13 @@ Public Class PlayerManager
     End Function
 
     Function CreateNewPlayer(ByVal aNewPlayer As NewPlayer) As NewPlayer
+
+        If CAH_Repository.PlayerAlreadyExists(aNewPlayer) Then
+            Throw New PlayerAlreadyExistsException(New CustomErrorDetail With { _
+                                                   .ErrorInfo = "PLAYER ALREADY EXISTS", _
+                                                   .ErrorDetail = "A player with that username already exists. Please select a new one."})
+        End If
+
         Try
             Return CAH_Repository.CreatePlayer(aNewPlayer)
         Catch ex As Exception
