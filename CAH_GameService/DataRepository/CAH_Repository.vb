@@ -65,14 +65,21 @@ Module CAH_Repository
     End Function
 
     Function Login(uName As String, encPW As String) As NewPlayer
-        Dim thePlayer As Player = Repository.Players.Where(Function(p) p.Username = uName And p.Password = encPW).First
-        If thePlayer Is Nothing Then
+        Try
+            Dim thePlayer As Player = Repository.Players.Where(Function(p) p.Username.ToUpper = uName.ToUpper And p.Password = encPW).First
+            If thePlayer IsNot Nothing Then
+                Dim PC As New PlayerConverter
+                Return PC.ConvertBack(thePlayer)
+            Else
+                Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
+                                                        .ErrorInfo = "LOGIN FAILED", _
+                                                        .ErrorDetail = "That username and password did work, silly. <blank> a different set."})
+            End If
+        Catch
             Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
-                                                    .ErrorInfo = "LOGIN FAILED", _
-                                                    .ErrorDetail = "That username and password did work, silly. <blank> a different set."})
-        End If
-        Dim PC As New PlayerConverter
-        Return PC.ConvertBack(thePlayer)
+                                                        .ErrorInfo = "LOGIN FAILED", _
+                                                        .ErrorDetail = "That username and password did work, silly. <blank> a different set."})
+        End Try
     End Function
 
     Public Function GetProxyPlayerByID(ByVal playerID As Int32) As NewPlayer
