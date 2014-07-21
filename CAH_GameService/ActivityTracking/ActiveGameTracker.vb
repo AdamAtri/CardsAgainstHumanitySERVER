@@ -111,7 +111,10 @@ Module ActiveGameTracker
         Dim row As DataRow = ActiveGameTable.Rows.Find(game)
         row("PlayersAccountedFor") = CInt(row("PlayersAccountedFor")) + 1
         ActiveGameTable.AcceptChanges()
-        If CInt(row("NumPlayers")) = CInt(row("PlayersAccountedFor")) Then
+        'FIX
+        'This is not the most elegant solution.
+        'Add player tracker to ActiveGameTracker.
+        If CInt(row("NumPlayers")) <= CInt(row("PlayersAccountedFor")) Then
             Return True
         Else
             Return False
