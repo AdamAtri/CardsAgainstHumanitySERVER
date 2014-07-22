@@ -29,7 +29,7 @@ The server manages game play, allowing multiple concurrent games, while tracking
       (if you run into an error remove the stuff about dropping FK Constraints and existing tables)</li>
   <li>Once the database is setup, open CAH_ConsoleServer >> App.config <br/>
       Find the "connectionStrings" element, then in the "connectionString" attribute replace <br/>
-      the "Data Source" with your named instance of SQL Server.</li>
+      the "Data Source" value with your named instance of SQL Server.</li>
 </ol>
 </p>
   
