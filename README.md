@@ -27,6 +27,9 @@ The server manages game play, allowing multiple concurrent games, while tracking
   <li>Restart MSSQL Server</li>
   <li>Open CAH_DataLibrary directory and execute the sql script: CAH_DataModel.edmx.sql <br/>
       (if you run into an error remove the stuff about dropping FK Constraints and existing tables)</li>
+  <li>Once the database is setup, open CAH_ConsoleServer >> App.config <br/>
+      Find the "connectionStrings" element, then in the "connectionString" attribute replace <br/>
+      the "Data Source" value with your named instance of SQL Server.</li>
 </ol>
 </p>
   
