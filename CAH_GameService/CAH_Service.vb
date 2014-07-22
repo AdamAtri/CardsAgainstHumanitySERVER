@@ -104,6 +104,8 @@ Public Class CAH_Service
         Try
             Dim VH As New VoteHandler
             Return VH.CastVote(thePlayerHand)
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Vote_Handler:CastVote(HAND_ID: " & thePlayerHand.HandID & ")")
             Throw
@@ -114,6 +116,8 @@ Public Class CAH_Service
         Try
             Dim VH As New VoteHandler
             Return VH.GetRoundWinner(CInt(roundID)).ToArray
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Vote_Handler:GetRoundWinner(ROUND_ID: " & roundID & ")")
             Throw
@@ -124,6 +128,8 @@ Public Class CAH_Service
         Try
             Dim VH As New VoteHandler
             Return VH.GetGameWinner(CInt(gameID)).ToArray
+        Catch cge As CustomGameException
+            Throw
         Catch ex As Exception
             ExceptionLogger.WriteException(ex, "Vote_Handler:GetGameWinner", CInt(gameID))
             Throw
