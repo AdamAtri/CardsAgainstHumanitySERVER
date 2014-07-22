@@ -40,7 +40,7 @@ Public Class CAH_Service
         Dim GamePlayer() As String = GamePlayerToken.Split("_"c)
         Try
             Dim D As New Dealer
-            Return D.DealHand(CInt(GamePlayer(0)), CInt(GamePlayer(1)))
+            Return D.DealHands(CInt(GamePlayer(0)), CInt(GamePlayer(1)))
         Catch cge As CustomGameException
             Throw
         Catch ex As Exception

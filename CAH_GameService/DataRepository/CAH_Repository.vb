@@ -140,20 +140,24 @@ Module CAH_Repository
         Return Repository.Games.Find(theGameID).Players.ToList.Count
     End Function
 
-    Function PlayersOpenGames(aPlayerID As Integer) As Boolean
+    Function PlayerHasOpenGames(aPlayerID As Integer) As Boolean
         Dim proceed As Boolean = True
-        Dim thePlayer As Player = Repository.Players.Find(aPlayerID)
-        If thePlayer Is Nothing Then
-            Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
-                                                   .ErrorInfo = "INVALID PLAYER ID", _
-                                                   .ErrorDetail = "The player id supplied does not exist in the Database."})
-        End If
-        Dim StartedGames = thePlayer.Games.Where(Function(g) g.GameStatus = GameStatus.STARTED)
-        Dim EnrollingGames = thePlayer.Games.Where(Function(g) g.GameStatus = GameStatus.ENROLLING)
+        Try
+            Dim thePlayer As Player = Repository.Players.Find(aPlayerID)
+            If thePlayer Is Nothing Then
+                Throw New InvalidLoginAttemptException(New CustomErrorDetail With { _
+                                                       .ErrorInfo = "INVALID PLAYER ID", _
+                                                       .ErrorDetail = "The player id supplied does not exist in the Database."})
+            End If
+            Dim StartedGames = thePlayer.Games.Where(Function(g) g.GameStatus = GameStatus.STARTED)
+            Dim EnrollingGames = thePlayer.Games.Where(Function(g) g.GameStatus = GameStatus.ENROLLING)
 
-        If StartedGames.Count > 0 Or EnrollingGames.Count > 0 Then
+            If StartedGames.Count > 0 Or EnrollingGames.Count > 0 Then
+                proceed = False
+            End If
+        Catch ex As Exception
             proceed = False
-        End If
+        End Try
 
         Return proceed
     End Function

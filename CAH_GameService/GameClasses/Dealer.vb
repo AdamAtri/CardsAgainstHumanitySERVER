@@ -1,6 +1,6 @@
 ﻿Public Class Dealer
 
-    Public Function DealHand(gameID As Int32, playerID As Int32) As PlayerHand()
+    Public Function DealHands(gameID As Int32, playerID As Int32) As PlayerHand()
 
         Dim result As PlayerHand()
         If ActiveGameTracker.AllHandsReady(gameID) Then

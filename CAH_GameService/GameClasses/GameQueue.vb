@@ -57,7 +57,7 @@
     ''' <returns>Proceed (Bool)</returns>
     ''' <remarks></remarks>
     Private Function CheckPlayerForOpenGames(aPlayerID As Integer) As Boolean
-        Return CAH_Repository.PlayersOpenGames(aPlayerID)
+        Return CAH_Repository.PlayerHasOpenGames(aPlayerID)
     End Function
 
     Private Sub StartGame(ByVal theGameID As Int32)
