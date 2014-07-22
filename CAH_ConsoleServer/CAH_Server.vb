@@ -3,6 +3,7 @@ Imports System.ServiceModel
 Imports System.ServiceModel.Web
 Imports CAH_GameService
 Imports System.ServiceModel.Description
+
 Module CAH_Server
 
     Sub Main()
