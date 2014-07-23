@@ -20,13 +20,14 @@ The server manages game play, allowing multiple concurrent games, while tracking
 <p><strong>Database Configuration:</strong>
 <ol>
   <li>Create a new database named "CAH_Database"</li>
-  <li>Create a new login with username: CAH_Model pw: password (Security >> Logins)</li>
+  <li>Create a new login with <strong>username:</strong> "CAH_Model" and <strong>pw:</strong> "password" (Security >> Logins)</li>
   <li>Add CAH_Model to CAH_Database >> Security >> Users</li>
   <li>Create a new schema within CAH_Database named "cah" with owner "CAH_Model". <br/>
   	  (Databases >> CAH_Database >> Security >> Schemas)</li>
   <li>Restart MSSQL Server</li>
-  <li>Open CAH_DataLibrary directory and execute the sql script: CAH_DataModel.edmx.sql <br/>
-      (if you run into an error remove the stuff about dropping FK Constraints and existing tables)</li>
+  <li>In the SERVER application, open the CAH_DataLibrary directory and execute the sql script: CAH_DataModel.edmx.sql <br/>
+      (if you run into an error, copy and paste the script into SQLServer and remove the stuff about <br/>
+      dropping FK Constraints and existing tables at the top.)</li>
   <li>Once the database is setup, open CAH_ConsoleServer >> App.config <br/>
       Find the "connectionStrings" element, then in the "connectionString" attribute replace <br/>
       the "Data Source" value with your named instance of SQL Server.</li>
