@@ -134,3 +134,12 @@ Public Class PlayerAlreadyExistsException
         MyBase.New(customError, Net.HttpStatusCode.Conflict)
     End Sub
 End Class
+
+<Serializable> _
+Public Class GameNotOverException
+    Inherits CustomGameException
+
+    Public Sub New(ByVal customError As CustomErrorDetail)
+        MyBase.New(customError, Net.HttpStatusCode.Conflict)
+    End Sub
+End Class
