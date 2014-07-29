@@ -345,35 +345,40 @@ Module CAH_Repository
         Return Repository.Players.Where(Function(p) p.Username = Username).Single.PlayerID
     End Function
 
-
-
-
-
-  
-
-
-
-
-
-
-
-
-    
-
-
-
-  
-
- 
+    Sub UpdateRound(ByRef aRound As Round)
+        Repository.Rounds.Attach(aRound)
+        Repository.SaveChanges()
+    End Sub
 
 
 
 
 
-    
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

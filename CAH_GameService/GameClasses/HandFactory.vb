@@ -20,10 +20,11 @@ Public Class HandFactory
                 .BlackCardID = SelectBlackCard(ents, theGame)
             End With
 
-            ents.Rounds.Add(newRound)
+            theGame.Rounds.Add(newRound)
+            ents.Games.Attach(theGame)
             ents.SaveChanges()
 
-            Dim theWhiteCards(WHITE_DECK) As Int32
+            Dim theWhiteCards(WHITE_DECK - 1) As Int32
             For i As Int32 = 1 To WHITE_DECK
                 theWhiteCards(i - 1) = i
             Next
@@ -56,8 +57,10 @@ Public Class HandFactory
                     .Card10 = theWhiteCards(cardcount)
                     cardcount += 1
                 End With
+                
                 newRound.Hands.Add(newHand)
             Next
+            ents.Rounds.Attach(newRound)
             ents.SaveChanges()
         Next
         ActiveGameTracker.HandsReady(theGame.GameID)

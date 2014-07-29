@@ -61,8 +61,9 @@
     End Function
 
     Private Sub StartGame(ByVal theGameID As Int32)
-        Dim t As New Task(Sub() CAH_Repository.StartGame(theGameID))
-        t.Start()
+        'Dim t As New Task(Sub() CAH_Repository.StartGame(theGameID))
+        't.Start()
+        CAH_Repository.StartGame(theGameID)
     End Sub
 
 

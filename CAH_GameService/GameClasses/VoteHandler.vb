@@ -62,12 +62,18 @@
     End Sub
 
     Function GetGameWinner(gameID As Int32) As List(Of Ballot)
-        Dim result As List(Of Ballot) = CAH_Repository.GetWinnersForGame(gameID)
-        If ActiveGameTracker.PlayerAccountedFor(gameID) Then
-            CAH_Repository.FinishGame(gameID)
-            ActiveGameTracker.FinishGame(gameID)
+        If ActiveGameTracker.GetGameStatus(gameID) > GameStatus.ROUND5 Then
+            Dim result As List(Of Ballot) = CAH_Repository.GetWinnersForGame(gameID)
+            If ActiveGameTracker.PlayerAccountedFor(gameID) Then
+                CAH_Repository.FinishGame(gameID)
+                ActiveGameTracker.FinishGame(gameID)
+            End If
+            Return result
+        Else
+            Throw New GameNotOverException(New CustomErrorDetail With { _
+                                           .ErrorInfo = "GAME NOT OVER", _
+                                           .ErrorDetail = "The game winner cannot be requested until the game is over."})
         End If
-        Return result
     End Function
 
 
